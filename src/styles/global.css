@@ -1,0 +1,387 @@
+@import "tailwindcss";
+
+/* ========================================
+   Design Tokens
+   ======================================== */
+
+@theme {
+  /* Colors */
+  --color-background: #1b1b1b;
+  --color-foreground: #c5c1b9;
+  --color-foreground-muted: #8a8780;
+  --color-foreground-hover: #dcdad5;
+  --color-accent: #575ECF;
+  --color-accent-hover: #6b71d9;
+  --color-overlay: rgba(255, 255, 255, 0.04);
+
+  /* Timing */
+  --duration-fast: 100ms;
+  --duration-normal: 150ms;
+  --duration-slow: 300ms;
+  --duration-reveal: 500ms;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.32, 1);
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+
+  /* Animation distances */
+  --reveal-distance: 20px;
+  --hover-lift: -2px;
+
+  /* Spacing */
+  --container-max: 48rem;
+  --container-padding: 1.5rem;
+  --container-padding-md: 2rem;
+  --container-padding-lg: 3rem;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   Typography
+   ======================================== */
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-foreground-hover);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-foreground-hover);
+}
+
+h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-foreground-hover);
+}
+
+/* ========================================
+   Links
+   ======================================== */
+
+a {
+  color: var(--color-foreground);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-foreground-hover);
+}
+
+/* Link with animated underline */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ========================================
+   Focus Styles - WCAG 2.4.7 Compliant
+   ======================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  /* Add white glow for enhanced visibility on dark background */
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+a:focus-visible {
+  outline-offset: 4px;
+}
+
+/* ========================================
+   Skip Link
+   ======================================== */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: 1rem 1.5rem;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 600;
+  transition: top var(--duration-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ========================================
+   Screen Reader Only
+   ======================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ========================================
+   Container
+   ======================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: var(--container-padding-md);
+    padding-right: var(--container-padding-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--container-padding-lg);
+    padding-right: var(--container-padding-lg);
+  }
+}
+
+/* ========================================
+   Animations - Entrance
+   ======================================== */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes reveal-item {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Reveal animation class */
+.reveal {
+  animation: reveal-up var(--duration-reveal) var(--ease-out-expo) both;
+}
+
+/* Section stagger - 100ms between sections */
+.reveal-section:nth-of-type(1) { animation-delay: 0ms; }
+.reveal-section:nth-of-type(2) { animation-delay: 100ms; }
+.reveal-section:nth-of-type(3) { animation-delay: 200ms; }
+.reveal-section:nth-of-type(4) { animation-delay: 300ms; }
+.reveal-section:nth-of-type(5) { animation-delay: 400ms; }
+
+/* Header reveal stagger */
+.reveal-name { animation-delay: 0ms; }
+.reveal-tagline { animation-delay: 100ms; }
+.reveal-contact { animation-delay: 200ms; }
+
+/* ========================================
+   Interactive States
+   ======================================== */
+
+/* Badge/pill component */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--color-overlay);
+  border-radius: 9999px;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-foreground-hover);
+}
+
+/* Name hover glow effect - moment of delight */
+.name-glow {
+  position: relative;
+  display: inline-block;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.name-glow::before {
+  content: '';
+  position: absolute;
+  inset: -20px -40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(87, 94, 207, 0) 0%,
+    rgba(87, 94, 207, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.name-glow:hover {
+  color: var(--color-accent);
+}
+
+.name-glow:hover::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(87, 94, 207, 0.15) 0%,
+    rgba(87, 94, 207, 0) 70%
+  );
+  opacity: 1;
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, color, background-color !important;
+    transition-duration: var(--duration-normal) !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  h1, h2, h3 {
+    color: black !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline;
+  }
+
+  /* Show URLs after links */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+    word-break: break-all;
+  }
+
+  /* Don't show URL for email/phone links */
+  a[href^="mailto"]::after,
+  a[href^="tel"]::after {
+    content: none;
+  }
+
+  /* Hide non-essential elements */
+  .no-print,
+  .skip-link {
+    display: none !important;
+  }
+
+  /* Prevent page breaks inside sections */
+  section,
+  article {
+    break-inside: avoid;
+  }
+
+  /* Ensure headings stay with content */
+  h2, h3 {
+    break-after: avoid;
+  }
+
+  /* Remove background colors and shadows */
+  .badge {
+    background: none !important;
+    border: 1px solid #ccc;
+    color: black !important;
+  }
+
+  /* Remove animations */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

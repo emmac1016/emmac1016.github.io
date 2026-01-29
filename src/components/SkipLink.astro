@@ -1,0 +1,44 @@
+---
+/**
+ * SkipLink Component
+ * Accessibility: Allows keyboard users to skip to main content
+ * Visually hidden until focused, then appears prominently
+ *
+ * Note: Requires target element (default #main-content) to exist on the page.
+ */
+
+interface Props {
+  href?: string;
+  label?: string;
+}
+
+const {
+  href = '#main-content',
+  label = 'Skip to main content'
+} = Astro.props;
+---
+
+<a href={href} class="skip-link">
+  {label}
+</a>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 1rem 1.5rem;
+    background: var(--color-accent);
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: top var(--duration-fast, 100ms) var(--ease-out, ease-out);
+  }
+
+  .skip-link:focus {
+    top: 0;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+</style>

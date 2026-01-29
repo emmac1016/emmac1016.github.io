@@ -1,0 +1,14 @@
+---
+/**
+ * SkillBadge Component
+ * Displays a single skill as a styled pill/badge
+ */
+
+interface Props {
+  skill: string;
+}
+
+const { skill } = Astro.props;
+---
+
+<span class="badge">{skill}</span>

@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { resume } from '../data/resume';
+---
+
+<Layout>
+  <div class="container py-16">
+    <h1 class="reveal reveal-name name-glow">{resume.contact.name}</h1>
+    <p class="text-foreground-muted mt-2 reveal reveal-tagline">{resume.contact.title}</p>
+    <p class="text-foreground-muted text-sm reveal reveal-tagline" style="animation-delay: 150ms;">
+      {resume.totalYearsExperience}+ years of experience
+    </p>
+    <p class="mt-8 reveal reveal-contact">
+      <a href={`mailto:${resume.contact.email}`} class="link-underline">{resume.contact.email}</a>
+    </p>
+  </div>
+</Layout>

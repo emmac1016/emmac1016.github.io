@@ -1,0 +1,50 @@
+---
+/**
+ * Footer Component
+ * Displays last updated timestamp and copyright
+ */
+
+const currentYear = new Date().getFullYear();
+const lastUpdated = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+---
+
+<footer class="footer">
+  <div class="container">
+    <p class="footer-text">
+      <span>© {currentYear} Emma Chirapongse</span>
+      <span class="footer-separator" aria-hidden="true">·</span>
+      <span>
+        Last updated: <time datetime={lastUpdated}>{lastUpdated}</time>
+      </span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid var(--color-overlay);
+  }
+
+  .footer-text {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-foreground-muted);
+    margin: 0;
+    text-align: center;
+  }
+
+  .footer-separator {
+    color: var(--color-foreground-muted);
+  }
+
+  @media print {
+    .footer {
+      border-top-color: #ccc;
+    }
+  }
+</style>
