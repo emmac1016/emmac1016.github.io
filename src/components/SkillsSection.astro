@@ -1,0 +1,114 @@
+---
+/**
+ * SkillsSection Component
+ * Displays technical and soft skills grouped by category
+ */
+
+import { resume } from '../data/resume';
+import SkillBadge from './SkillBadge.astro';
+
+const { technical, soft } = resume.skills;
+---
+
+<section class="skills-section reveal reveal-section" aria-labelledby="skills-heading">
+  <h2 id="skills-heading" class="section-heading">Skills</h2>
+
+  <div class="skills-content">
+    {technical.map((category) => (
+      <div class="skill-category">
+        <h3 class="category-name">{category.name}</h3>
+        <ul class="skill-list" role="list" aria-label={`${category.name} skills`}>
+          {category.skills.map((skill) => (
+            <li>
+              <SkillBadge skill={skill} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+
+    <div class="skill-category">
+      <h3 class="category-name">Soft Skills</h3>
+      <ul class="skill-list skill-list-soft" role="list" aria-label="Soft skills">
+        {soft.map((skill) => (
+          <li>{skill}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-overlay);
+  }
+
+  .skills-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .skill-category {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .category-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-foreground-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skill-list-soft {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .skill-list-soft li {
+    font-size: 0.9375rem;
+    color: var(--color-foreground);
+    line-height: 1.5;
+  }
+
+  @media print {
+    .skills-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-heading {
+      font-size: 12pt;
+      margin-bottom: 1rem;
+    }
+
+    .skills-content {
+      gap: 0.75rem;
+    }
+
+    .skill-list {
+      gap: 0.25rem;
+    }
+  }
+</style>

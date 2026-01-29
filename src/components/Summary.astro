@@ -1,0 +1,36 @@
+---
+/**
+ * Summary Component
+ * Displays professional summary
+ */
+
+import { resume } from '../data/resume';
+---
+
+<section class="summary reveal reveal-section" aria-labelledby="summary-heading">
+  <h2 id="summary-heading" class="sr-only">Professional Summary</h2>
+  <p class="summary-text">{resume.summary}</p>
+</section>
+
+<style>
+  .summary {
+    margin-bottom: 2.5rem;
+  }
+
+  .summary-text {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+
+  @media print {
+    .summary {
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-text {
+      font-size: 10pt;
+    }
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+/**
+ * Header Component
+ * Displays name, title, and contact information
+ */
+
+import { resume } from '../data/resume';
+
+const { name, title, location, phone, email, linkedin } = resume.contact;
+---
+
+<header class="header">
+  <h1 class="reveal reveal-name name-glow">{name}</h1>
+  <p class="header-title reveal reveal-tagline">{title}</p>
+  <p class="header-experience reveal reveal-tagline" style="animation-delay: 150ms;">
+    {resume.totalYearsExperience}+ years of experience
+  </p>
+
+  <address class="header-contact reveal reveal-contact">
+    <dl class="contact-list">
+      <div class="contact-item">
+        <dt class="sr-only">Location</dt>
+        <dd>{location}</dd>
+      </div>
+      <div class="contact-item">
+        <dt class="sr-only">Phone</dt>
+        <dd>
+          <a href={`tel:${phone.replace(/\./g, '')}`} class="link-underline">{phone}</a>
+        </dd>
+      </div>
+      <div class="contact-item">
+        <dt class="sr-only">Email</dt>
+        <dd>
+          <a href={`mailto:${email}`} class="link-underline">{email}</a>
+        </dd>
+      </div>
+      <div class="contact-item">
+        <dt class="sr-only">LinkedIn</dt>
+        <dd>
+          <a href={linkedin} class="link-underline" target="_blank" rel="noopener noreferrer">
+            LinkedIn<span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </dd>
+      </div>
+    </dl>
+  </address>
+</header>
+
+<style>
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .header-title {
+    color: var(--color-foreground-muted);
+    font-size: 1.125rem;
+    margin: 0.5rem 0 0 0;
+  }
+
+  .header-experience {
+    color: var(--color-foreground-muted);
+    font-size: 0.875rem;
+    margin: 0.25rem 0 0 0;
+  }
+
+  .header-contact {
+    font-style: normal;
+    margin-top: 1.5rem;
+  }
+
+  .contact-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .contact-item {
+    display: flex;
+    font-size: 0.9375rem;
+  }
+
+  .contact-item dd {
+    margin: 0;
+  }
+
+  @media print {
+    .header {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-list {
+      gap: 0.25rem 1rem;
+    }
+  }
+</style>

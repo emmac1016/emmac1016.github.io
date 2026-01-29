@@ -1,0 +1,73 @@
+---
+/**
+ * ExperienceSection Component
+ * Displays all work experience entries
+ */
+
+import { resume } from '../data/resume';
+import ExperienceCard from './ExperienceCard.astro';
+---
+
+<section class="experience-section reveal reveal-section" aria-labelledby="experience-heading">
+  <h2 id="experience-heading" class="section-heading">Professional Experience</h2>
+
+  <div class="experience-list">
+    {resume.experience.map((exp, index) => (
+      <div class="experience-item" style={`animation-delay: ${(index + 1) * 50}ms`}>
+        <ExperienceCard {...exp} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .experience-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-overlay);
+  }
+
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .experience-item {
+    animation: reveal-item var(--duration-reveal, 500ms) var(--ease-out-expo, ease-out) both;
+  }
+
+  @keyframes reveal-item {
+    from {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .experience-item {
+      animation: none;
+    }
+  }
+
+  @media print {
+    .experience-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-heading {
+      font-size: 12pt;
+      margin-bottom: 1rem;
+    }
+  }
+</style>

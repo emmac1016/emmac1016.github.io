@@ -1,0 +1,105 @@
+---
+/**
+ * EducationSection Component
+ * Displays education credentials and honors
+ */
+
+import { resume } from '../data/resume';
+
+const { degree, field, institution, location, graduationYear, honors } = resume.education;
+---
+
+<section class="education-section reveal reveal-section" aria-labelledby="education-heading">
+  <h2 id="education-heading" class="section-heading">Education</h2>
+
+  <div class="education-content">
+    <h3 class="education-degree">{degree} in {field}</h3>
+    <p class="education-institution">
+      {institution}<span class="education-location"> · {location}</span>
+    </p>
+    <p class="education-year">
+      <time datetime={String(graduationYear)}>{graduationYear}</time>
+    </p>
+
+    {honors && honors.length > 0 && (
+      <ul class="honors-list" role="list" aria-label="Academic honors">
+        {honors.map((honor) => (
+          <li>{honor}</li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>
+
+<style>
+  .education-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-overlay);
+  }
+
+  .education-content {
+    padding-bottom: 1rem;
+  }
+
+  .education-degree {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+    margin: 0 0 0.25rem 0;
+  }
+
+  .education-institution {
+    font-size: 0.9375rem;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .education-location {
+    color: var(--color-foreground-muted);
+  }
+
+  .education-year {
+    font-size: 0.875rem;
+    color: var(--color-foreground-muted);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .honors-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style-type: disc;
+  }
+
+  .honors-list li {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-foreground);
+    margin-bottom: 0.25rem;
+  }
+
+  .honors-list li::marker {
+    color: var(--color-foreground-muted);
+  }
+
+  .honors-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    .education-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-heading {
+      font-size: 12pt;
+      margin-bottom: 1rem;
+    }
+  }
+</style>
