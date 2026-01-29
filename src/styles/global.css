@@ -12,6 +12,7 @@
   --color-foreground-hover: #dcdad5;
   --color-accent: #575ECF;
   --color-accent-hover: #6b71d9;
+  --color-accent-text: #9397eb; /* Lighter accent for text - passes 4.5:1 contrast */
   --color-purple: #8b5cf6;
   --color-pink: #ec4899;
   --color-overlay: rgba(255, 255, 255, 0.04);
@@ -403,9 +404,14 @@ a:focus-visible {
     color: black !important;
   }
 
-  /* Remove animations */
+  /* Remove animations and show all content */
   * {
     animation: none !important;
     transition: none !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

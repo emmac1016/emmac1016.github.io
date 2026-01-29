@@ -12,5 +12,10 @@
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.17.1",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "^4.11.0",
+    "pa11y": "^9.0.1",
+    "puppeteer": "^24.36.1"
   }
 }
