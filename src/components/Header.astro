@@ -36,6 +36,15 @@ const firstName = name.split(' ')[0];
         LinkedIn
         <span class="sr-only">(opens in new tab)</span>
       </a>
+      <a href="/emma-chirapongse-resume.pdf" class="cta-secondary" download="emma-chirapongse-resume.pdf">
+        <svg class="download-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Resume
+        <span class="sr-only">(downloads PDF)</span>
+      </a>
     </div>
   </div>
 
@@ -160,8 +169,14 @@ const firstName = name.split(' ')[0];
     transform: translateY(0) scale(0.98);
   }
 
-  .linkedin-icon {
+  .linkedin-icon,
+  .download-icon {
     margin-right: 0.5rem;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .cta-secondary:hover .download-icon {
+    transform: translateY(2px);
   }
 
   .hero-meta {
