@@ -184,7 +184,7 @@ const rawData: ResumeData = {
       },
       {
         name: 'State Management',
-        skills: ['TanStack Query', 'Redux', 'Zustand', 'MobX'],
+        skills: ['TanStack Query', 'Redux', 'Zustand'],
       },
       {
         name: 'Cloud & Infrastructure',
@@ -200,7 +200,7 @@ const rawData: ResumeData = {
       },
       {
         name: 'Databases',
-        skills: ['MongoDB', 'MySQL', 'Oracle', 'GraphQL', 'REST APIs'],
+        skills: ['MongoDB', 'MySQL', 'Oracle', 'GraphQL'],
       },
     ],
     soft: [
