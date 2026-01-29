@@ -29,7 +29,7 @@
   --hover-lift: -2px;
 
   /* Spacing */
-  --container-max: 48rem;
+  --container-max: 64rem;
   --container-padding: 1.5rem;
   --container-padding-md: 2rem;
   --container-padding-lg: 3rem;
@@ -258,12 +258,18 @@ a:focus-visible {
   border-radius: 9999px;
   transition:
     background-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .badge:hover {
   background: rgba(255, 255, 255, 0.08);
   color: var(--color-foreground-hover);
+  transform: translateY(var(--hover-lift));
+}
+
+.badge:active {
+  transform: translateY(0) scale(0.98);
 }
 
 /* Name hover glow effect - moment of delight */

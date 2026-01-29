@@ -1,105 +1,121 @@
 ---
 /**
  * EducationSection Component
- * Displays education credentials and honors
+ * Minimal credential display in product style
  */
 
 import { resume } from '../data/resume';
 
-const { degree, field, institution, location, graduationYear, honors } = resume.education;
+const { degree, field, institution, graduationYear, honors } = resume.education;
 ---
 
-<section class="education-section reveal reveal-section" aria-labelledby="education-heading">
-  <h2 id="education-heading" class="section-heading">Education</h2>
-
-  <div class="education-content">
-    <h3 class="education-degree">{degree} in {field}</h3>
-    <p class="education-institution">
-      {institution}<span class="education-location"> · {location}</span>
-    </p>
-    <p class="education-year">
-      <time datetime={String(graduationYear)}>{graduationYear}</time>
-    </p>
-
-    {honors && honors.length > 0 && (
-      <ul class="honors-list" role="list" aria-label="Academic honors">
-        {honors.map((honor) => (
-          <li>{honor}</li>
-        ))}
-      </ul>
-    )}
+<section class="education-section reveal" aria-labelledby="education-heading">
+  <div class="education-card">
+    <div class="education-main">
+      <h2 id="education-heading" class="education-label">Education</h2>
+      <h3 class="education-degree">{degree} in {field}</h3>
+      <p class="education-details">
+        {institution} · <time datetime={String(graduationYear)}>{graduationYear}</time>
+      </p>
+    </div>
+    <div class="education-honors">
+      {honors && honors.length > 0 && (
+        <ul class="honors-tags" role="list" aria-label="Academic honors">
+          {honors.map((honor) => (
+            <li class="honor-tag">{honor}</li>
+          ))}
+        </ul>
+      )}
+    </div>
   </div>
 </section>
 
 <style>
   .education-section {
-    margin-bottom: 2.5rem;
+    padding: 3rem 0;
+    border-top: 1px solid var(--color-overlay);
   }
 
-  .section-heading {
-    font-size: 1.25rem;
+  .education-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .education-label {
+    font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--color-foreground-hover);
-    margin: 0 0 1.5rem 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-overlay);
-  }
-
-  .education-content {
-    padding-bottom: 1rem;
-  }
-
-  .education-degree {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-foreground-hover);
-    margin: 0 0 0.25rem 0;
-  }
-
-  .education-institution {
-    font-size: 0.9375rem;
-    margin: 0 0 0.25rem 0;
-  }
-
-  .education-location {
-    color: var(--color-foreground-muted);
-  }
-
-  .education-year {
-    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--color-foreground-muted);
     margin: 0 0 0.75rem 0;
   }
 
-  .honors-list {
-    margin: 0;
-    padding-left: 1.25rem;
-    list-style-type: disc;
+  .education-degree {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+    margin: 0 0 0.25rem 0;
   }
 
-  .honors-list li {
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--color-foreground);
-    margin-bottom: 0.25rem;
-  }
-
-  .honors-list li::marker {
+  .education-details {
+    font-size: 0.9375rem;
     color: var(--color-foreground-muted);
+    margin: 0;
   }
 
-  .honors-list li:last-child {
-    margin-bottom: 0;
+  .honors-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .honor-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.375rem 0.75rem;
+    background: rgba(87, 94, 207, 0.1);
+    color: var(--color-accent);
+    border-radius: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .education-card {
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .education-honors {
+      width: 100%;
+    }
+
+    .honors-tags {
+      justify-content: flex-start;
+    }
   }
 
   @media print {
     .education-section {
-      margin-bottom: 1.5rem;
+      padding: 1rem 0;
     }
 
-    .section-heading {
-      font-size: 12pt;
-      margin-bottom: 1rem;
+    .education-card {
+      display: block;
+    }
+
+    .honor-tag {
+      background: none;
+      border: 1px solid currentColor;
+      color: black;
+    }
+
+    .education-honors {
+      margin-top: 0.5rem;
     }
   }
 </style>

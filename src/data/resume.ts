@@ -15,8 +15,7 @@ const rawData: ResumeData = {
   contact: {
     name: 'Emma Chirapongse',
     title: 'Staff Front-end Engineer',
-    location: 'Decatur, GA',
-    phone: '267.939.5375',
+    location: 'Atlanta, GA',
     email: 'emmac1016@gmail.com',
     linkedin: 'https://www.linkedin.com/in/emmachirapongse/',
   },

@@ -1,37 +1,61 @@
 ---
 /**
  * SkillsSection Component
- * Displays technical and soft skills grouped by category
+ * Product-style "Toolkit" section with visual grid
  */
 
 import { resume } from '../data/resume';
-import SkillBadge from './SkillBadge.astro';
 
 const { technical, soft } = resume.skills;
+
+// Derive primary skills from resume data (first skill from each category)
+const primarySkills = technical.slice(0, 6).map((category) => ({
+  name: category.skills[0],
+  category: category.name,
+}));
 ---
 
-<section class="skills-section reveal reveal-section" aria-labelledby="skills-heading">
-  <h2 id="skills-heading" class="section-heading">Skills</h2>
+<section class="skills-section" aria-labelledby="skills-heading">
+  <header class="section-header reveal">
+    <h2 id="skills-heading" class="section-title">Toolkit</h2>
+    <p class="section-subtitle">
+      Technologies and tools I use to bring products to life
+    </p>
+  </header>
 
-  <div class="skills-content">
-    {technical.map((category) => (
-      <div class="skill-category">
-        <h3 class="category-name">{category.name}</h3>
-        <ul class="skill-list" role="list" aria-label={`${category.name} skills`}>
-          {category.skills.map((skill) => (
-            <li>
-              <SkillBadge skill={skill} />
-            </li>
-          ))}
-        </ul>
+  <div class="skills-highlight reveal" style="animation-delay: 100ms;">
+    {primarySkills.map((skill, index) => (
+      <div class="skill-card" style={`animation-delay: ${(index + 1) * 50}ms`}>
+        <span class="skill-name">{skill.name}</span>
+        <span class="skill-category">{skill.category}</span>
       </div>
     ))}
+  </div>
 
-    <div class="skill-category">
-      <h3 class="category-name">Soft Skills</h3>
-      <ul class="skill-list skill-list-soft" role="list" aria-label="Soft skills">
+  <div class="skills-detailed reveal" style="animation-delay: 300ms;">
+    <div class="skills-grid">
+      {technical.map((category) => (
+        <div class="category-card">
+          <h3 class="category-title">{category.name}</h3>
+          <ul class="category-skills" role="list">
+            {category.skills.map((skill) => (
+              <li>{skill}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="soft-skills">
+      <h3 class="soft-title">How I Work</h3>
+      <ul class="soft-list" role="list">
         {soft.map((skill) => (
-          <li>{skill}</li>
+          <li class="soft-item">
+            <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M13.5 4.5L6 12L2.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {skill}
+          </li>
         ))}
       </ul>
     </div>
@@ -40,40 +64,99 @@ const { technical, soft } = resume.skills;
 
 <style>
   .skills-section {
-    margin-bottom: 2.5rem;
+    padding: 6rem 0;
+    border-top: 1px solid var(--color-overlay);
   }
 
-  .section-heading {
-    font-size: 1.25rem;
-    font-weight: 600;
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--color-foreground-hover);
-    margin: 0 0 1.5rem 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-overlay);
+    margin: 0 0 0.75rem 0;
   }
 
-  .skills-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .skill-category {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .category-name {
-    font-size: 0.875rem;
-    font-weight: 600;
+  .section-subtitle {
+    font-size: 1.125rem;
     color: var(--color-foreground-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     margin: 0;
   }
 
-  .skill-list {
+  /* Highlighted Skills */
+  .skills-highlight {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .skill-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    background: var(--color-overlay);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    text-align: center;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .skill-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .skill-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+  }
+
+  .skill-category {
+    font-size: 0.75rem;
+    color: var(--color-foreground-muted);
+    margin-top: 0.25rem;
+  }
+
+  /* Detailed Skills */
+  .skills-detailed {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .category-card {
+    padding: 1.25rem;
+    background: var(--color-overlay);
+    border-radius: 8px;
+  }
+
+  .category-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .category-skills {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -82,33 +165,111 @@ const { technical, soft } = resume.skills;
     list-style: none;
   }
 
-  .skill-list-soft {
-    flex-direction: column;
-    gap: 0.25rem;
+  .category-skills li {
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+    padding: 0.25rem 0.625rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
   }
 
-  .skill-list-soft li {
+  /* Soft Skills */
+  .soft-skills {
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(87, 94, 207, 0.08) 0%, rgba(139, 92, 246, 0.04) 100%);
+    border-radius: 12px;
+  }
+
+  .soft-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+    margin: 0 0 1.25rem 0;
+  }
+
+  .soft-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .soft-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
     font-size: 0.9375rem;
     color: var(--color-foreground);
-    line-height: 1.5;
+  }
+
+  .check-icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    margin-top: 0.125rem;
+  }
+
+  @media (max-width: 1024px) {
+    .skills-highlight {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .skills-section {
+      padding: 4rem 0;
+    }
+
+    .skills-highlight {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .skill-card {
+      padding: 1rem 0.75rem;
+    }
+
+    .soft-skills {
+      padding: 1.5rem;
+    }
   }
 
   @media print {
     .skills-section {
-      margin-bottom: 1.5rem;
+      padding: 1.5rem 0;
     }
 
-    .section-heading {
-      font-size: 12pt;
-      margin-bottom: 1rem;
+    .skills-highlight {
+      display: none;
     }
 
-    .skills-content {
-      gap: 0.75rem;
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .skill-list {
-      gap: 0.25rem;
+    .category-card {
+      background: none;
+      padding: 0;
+    }
+
+    .soft-skills {
+      background: none;
+      padding: 0;
+    }
+
+    .check-icon {
+      display: none;
+    }
+
+    .soft-item {
+      padding-left: 1rem;
+    }
+
+    .soft-item::before {
+      content: '•';
+      position: absolute;
+      left: 0;
     }
   }
 </style>

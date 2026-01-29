@@ -1,35 +1,142 @@
 ---
 /**
  * Summary Component
- * Displays professional summary
+ * Product-style "About" section with key highlights
  */
 
 import { resume } from '../data/resume';
+
+// Derive metrics from resume data (single source of truth)
+const highlights = [
+  { metric: `${Math.floor(resume.totalYearsExperience)}+`, label: 'Years Experience' },
+  { metric: `${resume.experienceByCompany.length}+`, label: 'Companies Served' },
+  { metric: `${resume.skills.technical.length}`, label: 'Technical Domains' },
+];
 ---
 
-<section class="summary reveal reveal-section" aria-labelledby="summary-heading">
-  <h2 id="summary-heading" class="sr-only">Professional Summary</h2>
-  <p class="summary-text">{resume.summary}</p>
+<section class="about-section" aria-labelledby="about-heading">
+  <div class="about-content reveal">
+    <header class="about-header">
+      <h2 id="about-heading" class="about-title">About</h2>
+    </header>
+    <p class="about-text">{resume.summary}</p>
+  </div>
+
+  <aside class="about-metrics reveal" style="animation-delay: 150ms;" aria-label="Key statistics">
+    {highlights.map((item) => (
+      <div class="metric-card">
+        <span class="metric-value">{item.metric}</span>
+        <span class="metric-label">{item.label}</span>
+      </div>
+    ))}
+  </aside>
 </section>
 
 <style>
-  .summary {
-    margin-bottom: 2.5rem;
+  .about-section {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    padding: 6rem 0;
+    border-top: 1px solid var(--color-overlay);
   }
 
-  .summary-text {
-    font-size: 0.9375rem;
-    line-height: 1.7;
+  .about-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .about-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-foreground-hover);
+    margin: 0;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.8;
     color: var(--color-foreground);
     margin: 0;
   }
 
-  @media print {
-    .summary {
-      margin-bottom: 1.5rem;
+  .about-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .metric-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    background: var(--color-overlay);
+    border-radius: 8px;
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .metric-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-size: 0.875rem;
+    color: var(--color-foreground-muted);
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .about-section {
+      grid-template-columns: 1fr;
     }
 
-    .summary-text {
+    .about-metrics {
+      flex-direction: row;
+    }
+
+    .metric-card {
+      flex: 1;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about-section {
+      padding: 4rem 0;
+    }
+
+    .about-metrics {
+      flex-direction: column;
+    }
+
+    .metric-card {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media print {
+    .about-section {
+      display: block;
+      padding: 1rem 0;
+    }
+
+    .about-metrics {
+      display: none;
+    }
+
+    .about-text {
       font-size: 10pt;
     }
   }

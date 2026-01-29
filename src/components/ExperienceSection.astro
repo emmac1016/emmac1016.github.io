@@ -1,56 +1,140 @@
 ---
 /**
  * ExperienceSection Component
- * Displays all work experience entries
+ * Product-style "Featured Work" section with card layout
  */
 
 import { resume } from '../data/resume';
 import ExperienceCard from './ExperienceCard.astro';
+
+// Show top 4 most recent roles in featured section
+const featuredExperience = resume.experience.slice(0, 4);
+const additionalExperience = resume.experience.slice(4);
 ---
 
-<section class="experience-section reveal reveal-section" aria-labelledby="experience-heading">
-  <h2 id="experience-heading" class="section-heading">Professional Experience</h2>
+<section class="experience-section" aria-labelledby="experience-heading">
+  <header class="section-header reveal">
+    <h2 id="experience-heading" class="section-title">Featured Work</h2>
+    <p class="section-subtitle">
+      Building products at scale for millions of users
+    </p>
+  </header>
 
-  <div class="experience-list">
-    {resume.experience.map((exp, index) => (
-      <div class="experience-item" style={`animation-delay: ${(index + 1) * 50}ms`}>
-        <ExperienceCard {...exp} />
+  <div class="experience-grid">
+    {featuredExperience.map((exp, index) => (
+      <div class="experience-card-wrapper reveal" style={`animation-delay: ${(index + 1) * 100}ms`}>
+        <ExperienceCard {...exp} featured />
       </div>
     ))}
   </div>
+
+  {additionalExperience.length > 0 && (
+    <details class="more-experience reveal" style="animation-delay: 500ms;">
+      <summary class="more-toggle">
+        <span>View {additionalExperience.length} more roles</span>
+        <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="additional-experience">
+        {additionalExperience.map((exp, index) => (
+          <div class="experience-card-wrapper" style={`animation-delay: ${(index + 1) * 50}ms`}>
+            <ExperienceCard {...exp} featured />
+          </div>
+        ))}
+      </div>
+    </details>
+  )}
 </section>
 
 <style>
   .experience-section {
-    margin-bottom: 2.5rem;
+    padding: 6rem 0;
   }
 
-  .section-heading {
-    font-size: 1.25rem;
-    font-weight: 600;
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--color-foreground-hover);
-    margin: 0 0 1.5rem 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-overlay);
+    margin: 0 0 0.75rem 0;
   }
 
-  .experience-list {
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-foreground-muted);
+    margin: 0;
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .experience-card-wrapper {
     display: flex;
-    flex-direction: column;
   }
 
-  .experience-item {
-    animation: reveal-item var(--duration-reveal, 500ms) var(--ease-out-expo, ease-out) both;
+  .more-experience {
+    margin-top: 3rem;
   }
 
-  @keyframes reveal-item {
-    from {
-      opacity: 0;
-      transform: translateX(-8px);
+  .more-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    background: var(--color-overlay);
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+    list-style: none;
+  }
+
+  .more-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .more-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-foreground-hover);
+  }
+
+  .toggle-icon {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  details[open] .toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  .additional-experience {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-overlay);
+  }
+
+  @media (max-width: 768px) {
+    .experience-section {
+      padding: 4rem 0;
     }
-    to {
-      opacity: 1;
-      transform: translateX(0);
+
+    .experience-grid,
+    .additional-experience {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -58,16 +142,39 @@ import ExperienceCard from './ExperienceCard.astro';
     .experience-item {
       animation: none;
     }
+
+    .toggle-icon {
+      transition: none;
+    }
   }
 
   @media print {
     .experience-section {
-      margin-bottom: 1.5rem;
+      padding: 1.5rem 0;
     }
 
-    .section-heading {
-      font-size: 12pt;
-      margin-bottom: 1rem;
+    .experience-grid,
+    .additional-experience {
+      display: block;
+    }
+
+    .more-experience {
+      display: block;
+    }
+
+    .more-toggle {
+      display: none;
+    }
+
+    .additional-experience {
+      margin-top: 1rem;
+      padding-top: 0;
+      border: none;
+    }
+
+    details[open] .additional-experience,
+    details:not([open]) .additional-experience {
+      display: block;
     }
   }
 </style>
