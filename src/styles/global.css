@@ -41,6 +41,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Offset for fixed navigation when scrolling to anchors */
+  scroll-padding-top: 4rem;
 }
 
 body {
@@ -50,6 +52,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Space for fixed navigation */
+  padding-top: 3.5rem;
 }
 
 /* ========================================
@@ -226,22 +230,27 @@ a:focus-visible {
   }
 }
 
-/* Reveal animation class */
+/* Reveal animation class - starts hidden, animates on scroll */
 .reveal {
-  animation: reveal-up var(--duration-reveal) var(--ease-out-expo) both;
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
 }
 
-/* Section stagger - 100ms between sections */
-.reveal-section:nth-of-type(1) { animation-delay: 0ms; }
-.reveal-section:nth-of-type(2) { animation-delay: 100ms; }
-.reveal-section:nth-of-type(3) { animation-delay: 200ms; }
-.reveal-section:nth-of-type(4) { animation-delay: 300ms; }
-.reveal-section:nth-of-type(5) { animation-delay: 400ms; }
+/* Triggered when element enters viewport */
+.reveal.revealed {
+  animation: reveal-up var(--duration-reveal) var(--ease-out-expo) both;
+}
 
 /* Header reveal stagger */
 .reveal-name { animation-delay: 0ms; }
 .reveal-tagline { animation-delay: 100ms; }
 .reveal-contact { animation-delay: 200ms; }
+
+/* Fallback for no-JS: show content immediately */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
 
 /* ========================================
    Interactive States
@@ -321,6 +330,12 @@ a:focus-visible {
     transition-duration: var(--duration-normal) !important;
   }
 
+  /* Show reveal elements immediately - no waiting for scroll */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   html {
     scroll-behavior: auto;
   }
@@ -336,6 +351,7 @@ a:focus-visible {
     color: black !important;
     font-size: 11pt;
     line-height: 1.4;
+    padding-top: 0;
   }
 
   h1, h2, h3 {

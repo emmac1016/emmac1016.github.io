@@ -12,7 +12,7 @@ const featuredExperience = resume.experience.slice(0, 4);
 const additionalExperience = resume.experience.slice(4);
 ---
 
-<section class="experience-section" aria-labelledby="experience-heading">
+<section id="work" class="experience-section" aria-labelledby="experience-heading">
   <header class="section-header reveal">
     <h2 id="experience-heading" class="section-title">Featured Work</h2>
     <p class="section-subtitle">
@@ -22,14 +22,14 @@ const additionalExperience = resume.experience.slice(4);
 
   <div class="experience-grid">
     {featuredExperience.map((exp, index) => (
-      <div class="experience-card-wrapper reveal" style={`animation-delay: ${(index + 1) * 100}ms`}>
+      <div class="experience-card-wrapper reveal" style={`animation-delay: ${50 + (index * 75)}ms`}>
         <ExperienceCard {...exp} featured />
       </div>
     ))}
   </div>
 
   {additionalExperience.length > 0 && (
-    <details class="more-experience reveal" style="animation-delay: 500ms;">
+    <details class="more-experience reveal" style="animation-delay: 350ms;">
       <summary class="more-toggle">
         <span>View {additionalExperience.length} more roles</span>
         <svg class="toggle-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -38,7 +38,7 @@ const additionalExperience = resume.experience.slice(4);
       </summary>
       <div class="additional-experience">
         {additionalExperience.map((exp, index) => (
-          <div class="experience-card-wrapper" style={`animation-delay: ${(index + 1) * 50}ms`}>
+          <div class="experience-card-wrapper reveal" style={`animation-delay: ${(index + 1) * 50}ms`}>
             <ExperienceCard {...exp} featured />
           </div>
         ))}
@@ -50,6 +50,7 @@ const additionalExperience = resume.experience.slice(4);
 <style>
   .experience-section {
     padding: 6rem 0;
+    border-top: 1px solid var(--color-overlay);
   }
 
   .section-header {
@@ -125,6 +126,18 @@ const additionalExperience = resume.experience.slice(4);
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid var(--color-overlay);
+    animation: slide-down 0.3s var(--ease-out) forwards;
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @media (max-width: 768px) {
@@ -145,6 +158,10 @@ const additionalExperience = resume.experience.slice(4);
 
     .toggle-icon {
       transition: none;
+    }
+
+    .additional-experience {
+      animation: none;
     }
   }
 

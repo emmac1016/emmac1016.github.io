@@ -14,7 +14,7 @@ const highlights = [
 ];
 ---
 
-<section class="about-section" aria-labelledby="about-heading">
+<section id="about" class="about-section" aria-labelledby="about-heading">
   <div class="about-content reveal">
     <header class="about-header">
       <h2 id="about-heading" class="about-title">About</h2>
@@ -22,7 +22,7 @@ const highlights = [
     <p class="about-text">{resume.summary}</p>
   </div>
 
-  <aside class="about-metrics reveal" style="animation-delay: 150ms;" aria-label="Key statistics">
+  <aside class="about-metrics reveal" style="animation-delay: 100ms;" aria-label="Key statistics">
     {highlights.map((item) => (
       <div class="metric-card">
         <span class="metric-value">{item.metric}</span>
