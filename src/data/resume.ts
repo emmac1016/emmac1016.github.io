@@ -204,11 +204,11 @@ const rawData: ResumeData = {
       },
     ],
     soft: [
-      'Technical decision-making and problem-solving',
-      'Influencing without authority',
-      'Clear written and verbal communication',
-      'Mentoring engineers',
-      'Time management and task prioritization',
+      'Driving technical strategy across multiple teams',
+      'Building consensus on complex architectural decisions',
+      'Translating technical complexity for executive stakeholders',
+      'Growing senior engineers into technical leaders',
+      'Balancing long-term vision with near-term delivery',
     ],
   },
 };
